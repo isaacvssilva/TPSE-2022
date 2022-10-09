@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>BBB web</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+  <h1>Beaglebone IoT</h1>
+  <div>
+    <table>
+      <tr>
+        <label for="led0">USR0</label>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr0on" method="GET">
+              <input type="submit" value="ON">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr0off" method="GET">
+              <input type="submit" value="OFF">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/heartbeat0" method="GET">
+              <input type="submit" value="Heartbeat">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/delayusr0" method="GET">
+              <input type="submit" value="DELAY">
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div>
+    <table>
+      <tr>
+        <label for="led1">USR1</label><br>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr1on" method="GET">
+              <input type="submit" value="ON">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr1off" method="GET">
+              <input type="submit" value="OFF">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/heartbeat1" method="GET">
+              <input type="submit" value="Heartbeat">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/delayusr1" method="GET">
+              <input type="submit" value="DELAY">
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div>
+    <table>
+      <tr>
+        <label for="led2">USR2</label><br>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr2on" method="GET">
+              <input type="submit" value="ON">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr2off" method="GET">
+              <input type="submit" value="OFF">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/heartbeat2" method="GET">
+              <input type="submit" value="Heartbeat">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/delayusr2" method="GET">
+              <input type="submit" value="DELAY">
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div>
+    <table>
+      <tr>
+        <label for="led3">USR3</label><br>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr3on" method="GET">
+              <input type="submit" value="ON">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/usr3off" method="GET">
+              <input type="submit" value="OFF">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/heartbeat3" method="GET">
+              <input type="submit" value="Heartbeat">
+            </form>
+          </div>
+        </td>
+        <td>
+          <div>
+            <form action="http://10.4.1.2:8080/delayusr3" method="GET">
+              <input type="submit" value="DELAY">
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
