@@ -29,7 +29,6 @@
 #define GYRO_CONFIG 0x1B     // Gyroscope ADDRESS
 
 /*Gyroscope Measurements*/
-
 #define REG_GYRO_XOUT_H 0x43 // axis X+
 #define REG_GYRO_XOUT_L 0x44 // axis X-
 #define REG_GYRO_YOUT_H 0x45 // axis Y+
@@ -60,6 +59,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
+/*-----------------------------------------------------------------------------
+ *  Function prototype
+ *-----------------------------------------------------------------------------*/
 int file; //Device file
 // inicializando modulo
 void mod_MPU6050();
