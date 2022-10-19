@@ -27,9 +27,12 @@
 #include <fcntl.h>
 #include <stdint.h>
 #include "../inc/mpu_i2c.h"
+#define PATH "/sys/class/gpio/"
+#define GPIO_60 "60"
+#define OUT "out"
 
 int writeMPU(uint8_t addr_start, uint8_t dados){
-    /*meste coloca endereço do registrador e os dados do registrador no barramento.*/
+    /*mestre coloca endereço do registrador e os dados do registrador no barramento.*/
     char buffer_write[2];
     buffer_write[0] = addr_start;
     buffer_write[1] = dados;
@@ -90,13 +93,13 @@ void read_gyro(short *value){
     value[2] = ((gyro_buffer[4] << 8) + gyro_buffer[5]); // lendo os registradores Z
 }
 
-
 int main(){
-    // char *I2C_DEVICE_FILE = "/dev/i2c-2";
-    
-    //variaveis para pegar os valores do sensor (convertido)
+
+    FILE *diretorio = NULL; //ponteiro para acessar diretorio do gpio
+    FILE *set_IO = NULL; //ponteiro para setar o tipo de saida da funcao do gpio
+
+    //variaveis para pegar os valores do sensor
     double acc_X, acc_Y, acc_Z;
-    //variaveis para pegar os valores do sensor (convertido)
     double gyro_X, gyro_Y, gyro_Z;
 
     //variaveis para armazenar os valores bruto do sensor
@@ -114,6 +117,14 @@ int main(){
         return -1;
     }
     mod_MPU6050();
+    
+    /*exportando diretorio do gpio60(P9_12), e setando como output para conectar o buzzer*/
+    diretorio = fopen(PATH"export", "w");
+    fwrite(GPIO_60, 1, sizeof(GPIO_60), diretorio);
+    fclose(diretorio);
+    set_IO = fopen(PATH"gpio60/direction", "w");
+    fwrite(OUT, 1, sizeof(OUT), diretorio);
+    fclose(set_IO);
 
     while(1){
         read_acc(acc_value);
@@ -141,27 +152,41 @@ int main(){
         gyro_Y = (double) gyro_value[1] / GYRO_FS_SEL_0;
         gyro_Z = (double) gyro_value[2] / GYRO_FS_SEL_0;
 
-        printf("Printando valores brutos:\nAcelerometro:\n");
-        printf("angulo X: %d\n", acc_value[0]);
-        printf("angulo Y: %d\n", acc_value[1]);
-        printf("angulo Z: %d\n\n", acc_value[2]);
+        // printf("Printando valores brutos:\nAcelerometro:\n");
+        // printf("angulo X: %d\n", acc_value[0]);
+        // printf("angulo Y: %d\n", acc_value[1]);
+        // printf("angulo Z: %d\n\n", acc_value[2]);
 
-        printf("Printando valores convertidos:\nAcelerometro:\n");
-        printf("angulo X: %0.2f\n", acc_X);
-        printf("angulo Y: %0.2f\n", acc_Y);
-        printf("angulo Z: %0.2f\n\n", acc_Z);
+        // printf("Printando valores convertidos:\nAcelerometro:\n");
+        // printf("angulo X: %0.2f\n", acc_X);
+        // printf("angulo Y: %0.2f\n", acc_Y);
+        // printf("angulo Z: %0.2f\n\n", acc_Z);
 
-        printf("Printando valores brutos:\nGiroscopio:\n");
-        printf("angulo X: %d\n", gyro_value[0]);
-        printf("angulo Y: %d\n", gyro_value[1]);
-        printf("angulo Z: %d\n\n", gyro_value[2]);
+        // printf("Printando valores brutos:\nGiroscopio:\n");
+        // printf("angulo X: %d\n", gyro_value[0]);
+        // printf("angulo Y: %d\n", gyro_value[1]);
+        // printf("angulo Z: %d\n\n", gyro_value[2]);
+
+        /*verfica se os eixos utrapassam o range de -40 a 40+, caso verdadeiro, aciona o buzzer*/
+        if(gyro_X < -40 || gyro_X > 40 || gyro_Y < -40 || gyro_Y > 40 || gyro_Z < -40 || gyro_Z > 40){
+            
+            set_IO = fopen(PATH"gpio60/value", "w");
+            fwrite("1", 1, 1, diretorio);
+            fclose(set_IO);
+        }else{
+            set_IO = fopen(PATH"gpio60/value", "w");
+            fwrite("0", 1, 1, diretorio);
+            fclose(set_IO);
+        }
 
         printf("Printando valores convertidos:\nGiroscopio:\n");
         printf("angulo X: %0.2f\n", gyro_X);
         printf("angulo Y: %0.2f\n", gyro_Y);
         printf("angulo Z: %0.2f\n\n", gyro_Z);
+        /*suspende a execucao do thread de chamada por 1 segundo*/
+        // usleep(1000000);
         /*suspende a execucao do thread de chamada por 0,2 segundo*/
         usleep(200000);
-    }
+    } 
     return (0);
 }
