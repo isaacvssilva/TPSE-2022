@@ -26,4 +26,4 @@ Para executar (no linux da placa):
 
 Funcionamento:
 
-Ao movimentar o módulo MPU-6050, é feita a verficação se os eixos excedem o range determinado. Caso sejam ultrapasados, aciona-se um buzzer para sinalizar que o o limite foi execedido.
+Ao movimentar o módulo MPU-6050, é feita a verficação se os eixos excedem o range determinado. Caso sejam ultrapassados, aciona-se um buzzer para sinalizar que o o limite foi execedido.
