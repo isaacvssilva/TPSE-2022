@@ -23,3 +23,7 @@ Para executar (no linux da placa):
 ```sh
 ./app
 ```
+
+Funcionamento:
+
+Ao movimentar o módulo MPU-6050, é feita a verficação se os eixos excedem o range determinado. Caso sejam ultrapasados, aciona-se um buzzer para sinalizar que o o limite foi execedido.
