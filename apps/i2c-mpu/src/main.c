@@ -167,7 +167,7 @@ int main(){
         // printf("angulo Y: %d\n", gyro_value[1]);
         // printf("angulo Z: %d\n\n", gyro_value[2]);
 
-        /*verfica se os eixos utrapassam o range de -40 a 40+, caso verdadeiro, aciona o buzzer*/
+        /*verfica se os eixos ultrapassam o range de -40 a 40+, caso verdadeiro, aciona o buzzer*/
         if(gyro_X < -40 || gyro_X > 40 || gyro_Y < -40 || gyro_Y > 40 || gyro_Z < -40 || gyro_Z > 40){
             
             set_IO = fopen(PATH"gpio60/value", "w");
