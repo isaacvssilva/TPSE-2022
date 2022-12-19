@@ -1,0 +1,38 @@
+=========================== PRÁTICA - OVERLAYS BEAGLEBONE PWM ===========================
+
+backup bootcmd: fatload mmc 0:1 0x80F80000 am335x-boneblack.dtb; fatload mmc 0:1 0x80007FC0 uImage; bootm 0x80007FC0 - 0x80F80000;
+
+
+0. Habilitar no buildroot:
+	Build Device Tree with overlay support;
+	Pulse Width Modulation(PWM) Support;
+	eHRPWM PWM support;
+	eCAP PWM support;
+
+1. git clone https://github.com/beagleboard/bb.org-overlays.git ou git clone https://github.com/beagleboard/BeagleBoard-DeviceTrees.git
+
+2. Entrar na pasta bb.org-overlays/ ou na pasta BeagleBoard-DeviceTrees/
+
+3. sudo make install
+
+4. Entrar na pasta src/arm/overlays/ copiar um arquivo.dtbo para o sdcard, e colocar junto com as imagens. No caso criei uma pasta overlays e usei o BB-PWM0-00A0.dtbo.
+
+6. No u-boot no terminal da placa, editar o bootcmd para: fatload mmc 0:1 0x81000000 uImage; fatload mmc 0:1 0x82000000 am335x-boneblack.dtb; fdt addr 0x82000000; fatload mmc 0:1 0x83000000 overlays/BB-PWM0-00A0.dtbo; fdt resize 8192; fdt apply 0x83000000; bootm 0x81000000 - 0x82000000;
+
+no linux, verificar em /sys/class/pwm/
+custom:
+pwmchip0
+
+linux original:
+pwm-0:0  pwm-1:1  pwm-4:0  pwm-6:0  pwm-7:1   pwmchip1  pwmchip4  pwmchip7      
+pwm-1:0  pwm-3:0  pwm-4:1  pwm-7:0  pwmchip0  pwmchip3  pwmchip6
+ 
+/*------------------------TESTE DE DTBO------------------------------------------------*/
+
+fatload mmc 0:1 0x81000000 uImage;
+fatload mmc 0:1 0x82000000 am335x-boneblack.dtb;
+fdt addr 0x82000000;
+fatload mmc 0:1 0x83000000 BB-PWM0-00A0.dtbo;
+fdt resize 8192;
+fdt apply 0x83000000;
+bootm 0x81000000 - 0x82000000;
