@@ -1,0 +1,14 @@
+========== nova imagem ==========
+sudo cp MLO /media/isaac/BOOT
+sudo cp u-boot.img /media/isaac/BOOT
+sudo cp am335x-boneblack.dtb /media/isaac/BOOT/
+sudo cp uImage /media/isaac/BOOT
+
+bootcmd:
+fatload mmc 0:1 0x80F80000 am335x-boneblack.dtb; fatload mmc 0:1 0x80007FC0 uImage; bootm 0x80007FC0 - 0x80F80000;
+
+setenv argsnfs root=/dev/nfs rw nfsroot=${serverip}:/home/isaac/lab/rootfs,nfsvers=3,tcp rootwait
+
+bootargs:
+console=ttyS0,115200,n8 ip=10.4.1.2 root=/dev/nfs rw nfsroot=10.4.1.1:/home/isaac/lab/rootfs,nfsvers=3,tcp rootwait
+

@@ -1,0 +1,39 @@
+MPU6050 - Application with I2C comunication
+
+- Address Slave:
+O endereço do escravo do MPU-60X0 é b110100X que tem 7 bits de comprimento. O bit LSB do endereço de 7 bits é
+determinado pelo nível lógico no pino AD0. 
+Isso permite que dois MPU-60X0s sejam conectados ao mesmo barramento I2C.
+Quando usado nesta configuração, o endereço de um dos dispositivos deve ser b1101000 (o pino AD0 é lógico baixo) -> GND, 
+e o endereço do outro deve ser b1101001 (o pino AD0 é lógico alto) -> VCC.
+
+Register 104 – Signal Path Reset
+
+SIGNAL_PATH_RESET
+Tipo: write -> 0x68
+
+Registrador usado para resetar o sinal analogico e digital do giroscopio, acelerometro e sensores de temperatura. 
+
+ACELEROMETRO:
+convertendo valor bruto de ACC em valor G:
+- verificar faixa de valores em operacao
+exemplo:
+faixa sel=2 : 1g -> 4096
+
+valor bruto / (valor faixa)
+
+GIROSCOPIO:
+convertendo valor bruto de gyro em graus:
+faixa sel=0 1graus/seg -> 131
+
+valor bruto / (valor faixa) = graus/seg : 131/131 = 1graus/seg
+
+============================
+CONFIGURAÇÕES DE PINO
+============================
+
+P9_17 -> I2C1_SCL | MODE -> 2 | PIN NAME -> SPI0_CS0 | OFFSET -> conf_spi0_cs0 	0x95Ch
+P9_18 -> I2C1_SDA | MODE -> 2 | PIN NAME -> SPI0_D1  | OFFSET -> conf_spi0_d1	0x958h
+
+P9_19 -> I2C2_SCL | MODE -> 3 | PIN NAME -> UART0_TXD | OFFSET -> conf_uart0_txd 0x974h
+P9_20 -> I2C2_SDA | MODE -> 3 | PIN NAME -> UART0_RXD | OFFSET -> conf_uart0_rxd 0x970h

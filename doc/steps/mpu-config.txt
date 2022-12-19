@@ -1,0 +1,17 @@
+Para escrever os registradores internos do MPU-60X0, o mestre transmite a condição de partida (S), seguida do I2C
+º endereço e o bit de escrita (0). No ciclo de 9 clocks (quando o clock está alto), o MPU-60X0 reconhece o transferir. 
+
+Em seguida, o mestre coloca o endereço de registro (RA) no barramento. Após o MPU-60X0 reconhecer o recepção do endereço do registrador, o mestre coloca os dados do registrador no barramento. 
+
+Isto é seguido pelo ACK sinal, e a transferência de dados pode ser concluída pela condição de parada (P). Para escrever vários bytes após o último sinal ACK, o mestre pode continuar a emitir dados em vez de transmitir um sinal de parada. Neste caso, o O MPU-60X0 incrementa automaticamente o endereço do registrador e carrega os dados no registrador apropriado. o
+as figuras a seguir mostram sequências de gravação de um e dois bytes.
+
+
+
+Para ler os registradores internos do MPU-60X0, o mestre envia uma condição de partida, seguida do endereço I2C e
+um bit de escrita e, em seguida, o endereço do registrador que será lido. 
+
+Ao receber o sinal ACK do MPU-60X0, o mestre transmite um sinal de início seguido do endereço do escravo e do bit de leitura.
+
+Como resultado, O MPU-60X0 envia um sinal ACK e os dados. A comunicação termina com um não reconhecimento (NACK) sinal e um bit de parada do mestre. A condição NACK é definida de forma que a linha SDA permaneça alta no
+º9 ciclos de clock. As figuras a seguir mostram sequências de leitura de um e dois bytes.
